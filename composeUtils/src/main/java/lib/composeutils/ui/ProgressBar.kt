@@ -37,7 +37,7 @@ fun LineProgressbar(
     colors: List<Color>
 ) {
 
-    if (colors.isEmpty()) {
+    if (colors.isEmpty() || colors.size < 2) {
         throw ColorListViolation(listSize = 0)
     }
 
@@ -125,8 +125,8 @@ fun LineProgressbar(
 @Composable
 fun CircularProgressBar(colors: List<Color> = listOf()) {
 
-    if (colors.isEmpty())
-        throw ColorListViolation(listSize = 0)
+    if (colors.isEmpty() || colors.size < 2)
+        throw ColorListViolation(listSize = colors.size)
 
     var initialStart by remember {
         mutableStateOf(0f)
