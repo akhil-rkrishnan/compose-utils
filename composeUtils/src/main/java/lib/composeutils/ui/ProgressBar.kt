@@ -123,7 +123,7 @@ fun LineProgressbar(
  *  @param colors   Color for the progress bar
  */
 @Composable
-fun CircularProgressBar(colors: List<Color> = listOf()) {
+fun CircularProgressBar(colors: List<Color>) {
 
     if (colors.isEmpty() || colors.size < 2)
         throw ColorListViolation(listSize = colors.size)
