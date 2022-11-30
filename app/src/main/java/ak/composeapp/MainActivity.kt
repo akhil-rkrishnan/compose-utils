@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ak.composeapp.ui.theme.ComposeUtilAppTheme
-import ak.lib.composeutils.ui.LineProgressbar
+import lib.composeutils.ui.LineProgressbar
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

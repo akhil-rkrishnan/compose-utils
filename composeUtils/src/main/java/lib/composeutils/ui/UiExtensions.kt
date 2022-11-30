@@ -1,4 +1,4 @@
-package ak.lib.composeutils.ui
+package lib.composeutils.ui
 
 import android.content.Context
 import android.widget.Toast
