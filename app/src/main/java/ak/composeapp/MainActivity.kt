@@ -1,5 +1,6 @@
 package ak.composeapp
 
+import ak.composeapp.ui.theme.ComposeUtilAppTheme
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,10 +10,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import ak.composeapp.ui.theme.ComposeUtilAppTheme
 import lib.composeutils.ui.CircularProgressBar
-import lib.composeutils.ui.LineProgressbar
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,7 +24,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    CircularProgressBar(listOf())
+                    CircularProgressBar(
+                        listOf(Color.Blue, Color.Green, Color.Red, Color.Magenta),
+                        shuffleGradient = true,
+                        step = 5
+                    )
                 }
             }
         }

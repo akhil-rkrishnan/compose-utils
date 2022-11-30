@@ -125,15 +125,20 @@ fun LineProgressbar(
 @Composable
 fun CircularProgressBar(
     colors: List<Color>,
+    shuffleGradient: Boolean = false,
     circleStrokeWidth: Float = 10f,
     circleSize: Size = Size(100f, 100f),
     initialStartAngle: Float = 0f,
-    initialSweepAngle: Float = 0f
+    initialSweepAngle: Float = 0f,
+    step: Int = 2
 ) {
 
     if (colors.isEmpty() || colors.size < 2)
         throw ColorListViolation(listSize = colors.size)
 
+    var colorList by remember {
+        mutableStateOf(colors)
+    }
     var initialStart by remember {
         mutableStateOf(initialStartAngle)
     }
@@ -146,12 +151,14 @@ fun CircularProgressBar(
         targetValue = initialStart
     )
     LaunchedEffect(key1 = initialStart, block = {
-        initialStart += 2
-        sweepStart += 2
+        initialStart += step
+        sweepStart += step
 
         if (initialStart == 360f) {
             sweepStart = -90f
             initialStart = -90f
+            if (shuffleGradient)
+                colorList = colorList.shuffled()
         }
     })
     Box(modifier = Modifier.fillMaxSize()) {
@@ -159,7 +166,7 @@ fun CircularProgressBar(
             .align(Alignment.Center), onDraw = {
             drawArc(
                 brush = Brush.verticalGradient(
-                    colors = colors,
+                    colors = colorList,
                     startY = 0f,
                     endY = 120f
                 ),
