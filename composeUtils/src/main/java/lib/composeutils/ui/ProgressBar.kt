@@ -123,17 +123,23 @@ fun LineProgressbar(
  *  @param colors   Color for the progress bar
  */
 @Composable
-fun CircularProgressBar(colors: List<Color>) {
+fun CircularProgressBar(
+    colors: List<Color>,
+    circleStrokeWidth: Float = 10f,
+    circleSize: Size = Size(100f, 100f),
+    initialStartAngle: Float = 0f,
+    initialSweepAngle: Float = 0f
+) {
 
     if (colors.isEmpty() || colors.size < 2)
         throw ColorListViolation(listSize = colors.size)
 
     var initialStart by remember {
-        mutableStateOf(0f)
+        mutableStateOf(initialStartAngle)
     }
 
     var sweepStart by remember {
-        mutableStateOf(0f)
+        mutableStateOf(initialSweepAngle)
     }
 
     val toAngle by animateFloatAsState(
@@ -160,8 +166,8 @@ fun CircularProgressBar(colors: List<Color>) {
                 startAngle = toAngle,
                 sweepAngle = sweepStart,
                 useCenter = false,
-                size = Size(100f, 100f),
-                style = Stroke(width = 25f, miter = 0f, cap = StrokeCap.Round),
+                size = circleSize,
+                style = Stroke(width = circleStrokeWidth, miter = 0f, cap = StrokeCap.Round),
             )
         })
     }
