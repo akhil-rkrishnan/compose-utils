@@ -1,21 +1,33 @@
 package lib.composeutils.ui
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.toSize
-import timber.log.Timber
+import lib.composeutils.exception.ColorListViolation
 
 private const val TAG = "ProgressBar"
+
+/**
+ * Method to draw line progress bar
+ *
+ * @param modifier   Modifier for the box
+ * @param lineWidth  line width
+ * @param shuffleGradient   if the gradient colors needs to be shuffled set it as true, then it will shuffle the color list
+ * @param colors   list of colors need to render the line.
+ */
 
 @Composable
 fun LineProgressbar(
@@ -25,9 +37,8 @@ fun LineProgressbar(
     colors: List<Color>
 ) {
 
-    if (colors.isEmpty() || colors.size < 2) {
-        Timber.e("LineProgressbar: color list should have minimum of 2 values")
-        return
+    if (colors.isEmpty()) {
+        throw ColorListViolation(listSize = 0)
     }
 
     var colorList by remember {
@@ -106,6 +117,56 @@ fun LineProgressbar(
         })
     }
 }
+
+/**
+ *  Method to draw circular progress bar - alpha version
+ *  @param colors   Color for the progress bar
+ */
+@Composable
+fun CircularProgressBar(colors: List<Color> = listOf()) {
+
+    if (colors.isEmpty())
+        throw ColorListViolation(listSize = 0)
+
+    var initialStart by remember {
+        mutableStateOf(0f)
+    }
+
+    var sweepStart by remember {
+        mutableStateOf(0f)
+    }
+
+    val toAngle by animateFloatAsState(
+        targetValue = initialStart
+    )
+    LaunchedEffect(key1 = initialStart, block = {
+        initialStart += 2
+        sweepStart += 2
+
+        if (initialStart == 360f) {
+            sweepStart = -90f
+            initialStart = -90f
+        }
+    })
+    Box(modifier = Modifier.fillMaxSize()) {
+        Canvas(modifier = Modifier
+            .align(Alignment.Center), onDraw = {
+            drawArc(
+                brush = Brush.verticalGradient(
+                    colors = colors,
+                    startY = 0f,
+                    endY = 120f
+                ),
+                startAngle = toAngle,
+                sweepAngle = sweepStart,
+                useCenter = false,
+                size = Size(100f, 100f),
+                style = Stroke(width = 25f, miter = 0f, cap = StrokeCap.Round),
+            )
+        })
+    }
+}
+
 
 enum class LineSlide {
     LEFT_START_TO_RIGHT, LEFT_START_TO_LEFT

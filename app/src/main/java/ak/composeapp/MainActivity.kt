@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import ak.composeapp.ui.theme.ComposeUtilAppTheme
+import lib.composeutils.ui.CircularProgressBar
 import lib.composeutils.ui.LineProgressbar
 
 class MainActivity : ComponentActivity() {
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    LineProgressbar(colors = listOf())
+                    CircularProgressBar()
                 }
             }
         }
