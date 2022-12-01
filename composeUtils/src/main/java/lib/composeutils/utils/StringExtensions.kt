@@ -11,7 +11,7 @@ fun String?.isNotValid(): Boolean {
     return !this.isValid()
 }
 
-fun String?.containsEmoji(): Boolean {
+private fun String?.containsEmoji(): Boolean {
     if (this == null)
         return false
     this.forEach {

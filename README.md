@@ -65,6 +65,13 @@ The UI Components are developed in Jetpack compose. So if you need to use the co
  - Implemented to navigate to an activity in a context scope. So we don't need to write `startActivity()` method every time to load new intent.\
    **shouldFinish** - If true, will finish the current activity. \
    **Bundle Scope** - All the data which need to be sent to other activity will be passed as bundle.
+
+> **Launch app settings**
+ ```
+ openAppSettings()
+  ```
+ - This method will open the app settings in a context scope.
+
    
      
       
