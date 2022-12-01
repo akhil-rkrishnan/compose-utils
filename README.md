@@ -11,7 +11,7 @@ The UI Components are developed in Jetpack compose. So if you need to use the co
 ##### Line progress bar
 ![lpb](https://user-images.githubusercontent.com/30260853/205038531-180d45cb-1f8c-4573-aa7b-8ef495bb2488.gif)
 
-       LineProgressbar(
+       LineProgressBar(
             modifier = Modifier,
             colors = listOf(Color.Blue, Color.Green, Color.Red, Color.Magenta),
             shuffleGradient = true,
