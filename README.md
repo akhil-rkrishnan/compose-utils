@@ -2,7 +2,7 @@
 
 This is a utility library with UI components and General extensions.
 
-I use all the functions included in this library for every project i make. I was importing this as a seperate module for each time when i work on a project. Now it's a library, so that if any one needs these functionalities in their project, they can directly import using the gradle dependency from jitpack.
+I use all the functions included in this library for every project i make. I was importing this as a separate module for each time when i work on a project. Now it's a library, so that if any one needs these functionalities in their project, they can directly import using the gradle dependency from jitpack.
 
 The UI Components are developed in Jetpack compose. So if you need to use the components in a non-compose project, refer [Interoperability APIs](https://developer.android.com/jetpack/compose/interop/interop-apis) to include the Compose UI components in xml. 
 
