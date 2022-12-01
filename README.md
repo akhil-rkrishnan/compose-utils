@@ -76,15 +76,13 @@ The UI Components are developed in Jetpack compose. So if you need to use the co
  ```
  Int?.asOrdinal()
   ``` 
-- This method will return the ordinal number string of the integer. \
+- This method will return the ordinal number string of the integer.
 
   examples:
 
        1.asOrdinal() -> 1st 
        12.asOrdinal() -> 12th 
        23.asOrdinal() -> 23rd
-
-
 
 
 # Download
