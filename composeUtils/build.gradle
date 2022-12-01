@@ -81,7 +81,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.akhil-rkrishnan'
                 artifactId = 'compose-utils'
-                version = '1.0.5'
+                version = '1.0.6'
             }
         }
     }

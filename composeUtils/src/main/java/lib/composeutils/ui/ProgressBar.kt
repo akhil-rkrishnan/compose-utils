@@ -3,7 +3,6 @@ package lib.composeutils.ui
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,15 +23,15 @@ private const val TAG = "ProgressBar"
  * Method to draw line progress bar
  *
  * @param modifier   Modifier for the box
- * @param lineWidth  line width
+ * @param strokeWidth  line width
  * @param shuffleGradient   if the gradient colors needs to be shuffled set it as true, then it will shuffle the color list
  * @param colors   list of colors need to render the line.
  */
 
 @Composable
-fun LineProgressbar(
+fun LineProgressBar(
     modifier: Modifier = Modifier,
-    lineWidth: Float = 10f,
+    strokeWidth: Float = 10f,
     shuffleGradient: Boolean = false,
     colors: List<Color>
 ) {
@@ -55,7 +54,6 @@ fun LineProgressbar(
     }
 
     Box(modifier = modifier
-        .fillMaxSize()
         .onGloballyPositioned {
             boxCordinates = it.size.toSize()
         }) {
@@ -103,15 +101,14 @@ fun LineProgressbar(
         })
 
 
-        Canvas(modifier = Modifier
-            .fillMaxWidth(), onDraw = {
+        Canvas(modifier = Modifier.fillMaxWidth(), onDraw = {
             drawLine(
                 brush = Brush.linearGradient(
                     colors = colorList,
                 ),
                 start = Offset(x = startX, y = 0f),
                 end = Offset(x = endX, y = 0f),
-                strokeWidth = lineWidth, cap = StrokeCap.Round
+                strokeWidth = strokeWidth, cap = StrokeCap.Round
             )
 
         })
@@ -124,6 +121,7 @@ fun LineProgressbar(
  */
 @Composable
 fun CircularProgressBar(
+    modifier: Modifier = Modifier,
     colors: List<Color>,
     shuffleGradient: Boolean = false,
     circleStrokeWidth: Float = 10f,
@@ -161,7 +159,7 @@ fun CircularProgressBar(
                 colorList = colorList.shuffled()
         }
     })
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier) {
         Canvas(modifier = Modifier
             .align(Alignment.Center), onDraw = {
             drawArc(
