@@ -84,6 +84,25 @@ The UI Components are developed in Jetpack compose. So if you need to use the co
        12.asOrdinal() -> 12th 
        23.asOrdinal() -> 23rd
 
+> **Avoid crash on monkey testing**
+ ```
+ Modifier.persistShortKeyForInput(input: TextFieldValue)
+  ``` 
+- This is a modifier extension used in TextField Composable to avoid crash in monkey testing. The crash can't be reproduced always on manual testing.
+  This is often occurred in automated UI testing.
+
+  How to use the extension?:
+     ```
+    TextField(
+         value = textFieldValue,
+         modifier = Modifier.persistShortKeyForInput(textFieldValue)
+                           .fillMaxWidth()
+                           .onFocusEvent { event ->
+                             .....
+                           } 
+          )
+    ```
+
 
 # Download
 > In your settings.gradle file
