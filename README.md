@@ -122,7 +122,7 @@ dependencyResolutionManagement {
 dependencies {
     ....
     .....  
-    implementation 'com.github.akhil-rkrishnan:compose-utils:1.0.4'
+    implementation 'com.github.akhil-rkrishnan:compose-utils:1.0.6'
     
     //Note: Please check the release tag for the latest version in the repo and replace the version with the latest tag
 }
