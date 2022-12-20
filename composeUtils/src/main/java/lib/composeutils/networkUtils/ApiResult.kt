@@ -22,7 +22,7 @@ private suspend fun <T> executeApi(
         }
     } catch (e: Exception) {
         val cause = e.getCause()
-        onFailed(cause, if (cause == null) "Unknown http code" else e.message)
+        onFailed(cause, e.message)
     }
 }
 
@@ -43,7 +43,7 @@ private inline fun <reified Model> ApiResult<Model>.ifFailed(cause: (code: Respo
         if (exception is HttpException) {
             cause(responseCodeMap.get(exception.response()?.code()), exception.message)
         } else {
-            cause(ResponseCode.Unknown, "Unknown http response code")
+            cause(ResponseCode.Unknown, exception.message)
         }
     }
 }
