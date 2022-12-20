@@ -106,7 +106,7 @@ The UI Components are developed in Jetpack compose. So if you need to use the co
 
 
 > **Save any type of object to Shared preference**
-Inlcuded functionality for saving user defined class to shared preference.
+- Inlcuded functionality for saving user defined class to shared preference.
 
 How to use the extension?
   ```
