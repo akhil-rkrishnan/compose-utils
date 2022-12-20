@@ -104,6 +104,54 @@ The UI Components are developed in Jetpack compose. So if you need to use the co
     ```
 
 
+
+> **Save any type of object to Shared preference**
+- Inlcuded functionality for saving user defined class to shared preference.
+
+How to use the extension?
+  ```
+  fun initPrefs() {
+   //init shared preference
+   val sharedPreferences = getSharedPreferences("TEMP_PREF", MODE_PRIVATE)
+   
+   //Method to save the data
+   sharedPreferences.saveData("freeModelKey", it)
+      
+  }
+
+  fun readPrefsData() {
+    // Reading data.
+   val data : FreeModel? = sharedPreferences.getData("freeModelKey", FreeModel::class.java)
+  }
+
+  data class FreeModel(
+   val count: Int,
+   val entries: List<String>
+)
+
+
+   ```
+
+> **Get rid of writing long log statements**
+- Included Timber log extensions with optional parameters. It will accept any data type
+  How to use extensions?:
+   ```
+   val name = "Android"
+   // for error log
+   name.loge(tag = "tag", filterWord = "name")
+
+   // for debug log
+   name.logd(tag = "tag", filterWord = "name")
+
+   // for info log
+   name.logi(tag = "tag", filterWord = "name")
+
+   ...
+
+   ```  
+
+
+
 # Download
 > In your settings.gradle file
 ```
