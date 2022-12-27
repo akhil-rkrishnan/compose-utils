@@ -2,15 +2,19 @@ package lib.composeutils.networkUtils
 
 import retrofit2.HttpException
 
-
-private suspend fun <M> executeApi(block: suspend () -> ApiResult<M>): ApiResult<M> =
+/**
+* Method to execute the Network call.
+ * @param block lambada defined for the user api call block
+ * @return ApiResult<Type> The response body / exception
+*/
+suspend fun <M> initApiCall(block: suspend () -> ApiResult<M>): ApiResult<M> =
     try {
         block()
     } catch (ex: Exception) {
         ApiResult.Failed(ex)
     }
 
-private suspend fun <T> executeApi(
+private suspend fun <T> initApiCall(
     onSuccess: (data: T) -> Unit,
     onFailed: (code: ResponseCode?, message: String?) -> Unit,
     block: suspend () -> ApiResult<T>
@@ -26,19 +30,19 @@ private suspend fun <T> executeApi(
     }
 }
 
-private sealed class ApiResult<out Model> {
+sealed class ApiResult<out Model> {
     object isLoading : ApiResult<Nothing>()
     data class Success<out Model>(val data: Model) : ApiResult<Model>()
     data class Failed(val exception: Exception) : ApiResult<Nothing>()
 }
 
-private inline fun <reified Model> ApiResult<Model>.ifSuccess(block: (data: Model) -> Unit) {
+inline fun <reified Model> ApiResult<Model>.ifSuccess(block: (data: Model) -> Unit) {
     if (this is ApiResult.Success) {
         block(data)
     }
 }
 
-private inline fun <reified Model> ApiResult<Model>.ifFailed(cause: (code: ResponseCode?, message: String?) -> Unit) {
+inline fun <reified Model> ApiResult<Model>.ifFailed(cause: (code: ResponseCode?, message: String?) -> Unit) {
     if (this is ApiResult.Failed) {
         if (exception is HttpException) {
             cause(responseCodeMap.get(exception.response()?.code()), exception.message)
@@ -48,7 +52,7 @@ private inline fun <reified Model> ApiResult<Model>.ifFailed(cause: (code: Respo
     }
 }
 
-private fun Exception.getCause(): ResponseCode? {
+fun Exception.getCause(): ResponseCode? {
     return if (this is HttpException) {
         responseCodeMap[response()?.code()]
     } else {
@@ -56,13 +60,13 @@ private fun Exception.getCause(): ResponseCode? {
     }
 }
 
-private inline fun <reified Model> ApiResult<Model>.ifLoading(loading: () -> Unit) {
+inline fun <reified Model> ApiResult<Model>.ifLoading(loading: () -> Unit) {
     if (this is ApiResult.isLoading) {
         loading()
     }
 }
 
-private val responseCodeMap = hashMapOf<Int?, ResponseCode>().apply {
+val responseCodeMap = hashMapOf<Int?, ResponseCode>().apply {
     put(200, ResponseCode.ResponseOk)
     put(201, ResponseCode.ResponseCreated)
     put(202, ResponseCode.ResponseAccepted)
@@ -75,7 +79,7 @@ private val responseCodeMap = hashMapOf<Int?, ResponseCode>().apply {
     put(null, ResponseCode.Unknown)
 }
 
-private sealed class ResponseCode {
+sealed class ResponseCode {
     object ResponseOk : ResponseCode() //200
     object ResponseCreated : ResponseCode() //201
     object ResponseAccepted : ResponseCode() //202
