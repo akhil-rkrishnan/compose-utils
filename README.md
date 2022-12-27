@@ -46,6 +46,49 @@ The UI Components are developed in Jetpack compose. So if you need to use the co
 **initialSweepAngle** - Initial sweep angle. \
 **step** - Step for the cordinates [higher the value, the faster the intermediate].
 
+### Network Extension
+#### Here we included a network extension for api calls.
+> Perform Api call
+  ```
+  override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .client(
+                OkHttpClient
+                    .Builder().readTimeout(5, TimeUnit.MINUTES)
+                    .writeTimeout(5, TimeUnit.MINUTES)
+                    .connectTimeout(5, TimeUnit.MINUTES)
+                    .build()
+            )
+            .build()
+
+        val retrofitApi = retrofit.create(ApiInterface::class.java)
+        var response: ApiResult<FreeApiModel> //FreeApiModel -> sample response model
+        lifecycleScope.launch {
+            response = initApiCall {
+                ApiResult.Success(retrofitApi.getAllData())
+            }
+
+            response.ifSuccess { freeApiModel ->
+                // do the operations after api success 
+            }
+            response.ifFailed { code, message ->
+                // do the operations on api failed 
+            }
+        }
+  }
+
+interface ApiInterface {
+    @GET("entries")
+    suspend fun getAllData(): FreeApiModel
+}
+  ``` 
+- ApiResult<T> --> Generic class which accepts all the types of data
+- ApiResult.Success(T) --> This method will return the response model
+  - ApiResult<T>.ifSuccess {} : This will be executed if the api call is success (code: 200)
+  - ApiResult<T>.ifFailed { code, message -> } : This will be executed if the api call is failed
 
 ### General Extensions
 #### Here we define some general extensions which can be included in any project
@@ -170,7 +213,7 @@ dependencyResolutionManagement {
 dependencies {
     ....
     .....  
-    implementation 'com.github.akhil-rkrishnan:compose-utils:1.0.6'
+    implementation 'com.github.akhil-rkrishnan:compose-utils:1.0.8'
     
     //Note: Please check the release tag for the latest version in the repo and replace the version with the latest tag
 }
