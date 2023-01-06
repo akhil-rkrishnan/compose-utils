@@ -45,7 +45,7 @@ inline fun <reified Model> ApiResult<Model>.ifSuccess(block: (data: Model) -> Un
 inline fun <reified Model> ApiResult<Model>.ifFailed(cause: (code: ResponseCode?, message: String?) -> Unit) {
     if (this is ApiResult.Failed) {
         if (exception is HttpException) {
-            cause(responseCodeMap.get(exception.response()?.code()), exception.message)
+            cause(responseCodeMap[exception.response()?.code()], exception.message)
         } else {
             cause(ResponseCode.Unknown, exception.message)
         }
