@@ -213,10 +213,24 @@ dependencyResolutionManagement {
 dependencies {
     ....
     .....  
-    implementation 'com.github.akhil-rkrishnan:compose-utils:1.0.8'
+    implementation 'com.github.akhil-rkrishnan:compose-utils:1.1.0'
     
     //Note: Please check the release tag for the latest version in the repo and replace the version with the latest tag
 }
+```
+
+> In your project level build.gradle file
+```
+...
+buildscript {
+    ext {
+        compose_version = '1.1.1' // mention your compose version
+        compile_sdk_version = 31 // mention your compile sdk version
+        min_sdk_version = 21 // mention your min sdk version
+        target_sdk_version = compile_sdk_version // mention your target sdk version
+    }
+}
+...
 ```
 
   
