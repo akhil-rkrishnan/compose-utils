@@ -36,7 +36,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel = ViewModelProvider(this).get(PresentationViewModel::class.java)
+        val viewModel = ViewModelProvider(this)[PresentationViewModel::class.java]
         setContent {
             ComposeUtilAppTheme {
                 ConcurrentUpdate(viewModel)
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
             viewModel.presentationFlow.collectLatest {
                 scrollState.scrollBy(it.toFloat())
             }
-        } )
+        })
         Box(
             modifier = Modifier
                 .fillMaxWidth(0.8f)
